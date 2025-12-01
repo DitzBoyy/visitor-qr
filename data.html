@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Visitor - Data Pengunjung</title>
+
+  <style>
+    :root {
+      --bg: #f5f6fa;
+      --card: #ffffff;
+      --text: #1f2328;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --danger: #dc2626;
+      --danger-hover: #b91c1c;
+      --border: #e5e7eb;
+      --shadow: 0 8px 24px rgba(31, 35, 40, 0.08);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      min-height: 100vh;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.15s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #f3f4f6;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      width: 100%;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+
+    .site-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background-color 0.15s ease;
+    }
+
+    .nav a:hover {
+      background-color: #f3f4f6;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .card-body { padding: 20px 24px; }
+
+    h2 {
+      
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background: #f3f4f6;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: var(--danger-hover);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Menu</h2>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="forminput.html">Input Pengunjung</a>
+      <a href="data.html">Data Pengunjung</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-content">
+
+    <!-- Header -->
+    <header class="site-header">
+      <h1 class="site-title">Aplikasi Visitor</h1>
+      <nav class="nav">
+        <a href="#" id="LogoutBtn">Logout</a>
+      </nav>
+    </header>
+
+    <!-- Content -->
+    <main class="page">
+      <div class="card">
+
+        <h2>Daftar Pengunjung</h2>
+
+        <table id="visitor-table">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Telepon</th>
+              <th>Kunjungan</th>
+              <th>Instansi</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- Data akan diisi via JavaScript -->
+          </tbody>
+        </table>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // Logout
+    document.getElementById("LogoutBtn").addEventListener("click", function(e) {
+      e.preventDefault();
+      window.location.href = "login.html";
+    });
+
+    // Load Data
+    const visitors = JSON.parse(localStorage.getItem("visitors")) || [];
+    const tbody = document.querySelector("#visitor-table tbody");
+
+    if (visitors.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" style="text-align:center; padding:20px;">Belum ada data pengunjung</td>
+        </tr>`;
+    } else {
+      visitors.forEach((v, i) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${v.nama}</td>
+          <td>${v.telepon}</td>
+          <td>${v.kunjungan}</td>
+          <td>${v.instansi}</td>
+          <td>
+            <button class="btn btn-primary" onclick="generateQR(${i})">QR</button>
+            <button class="btn btn-danger" onclick="hapusData(${i})">Hapus</button>
+          </td>
+        `;
+
+        tbody.appendChild(row);
+      });
+    }
+
+    // Generate QR
+    function generateQR(i) {
+  window.location.href = `qr.html?id=${i}`;
+}
+
+    // Hapus Data
+    function hapusData(i) {
+      if (!confirm("Yakin ingin menghapus data ini?")) return;
+      visitors.splice(i, 1);
+      localStorage.setItem("visitors", JSON.stringify(visitors));
+      location.reload();
+    }
+
+    const handleQR = (id) => {
+  const url = `https://visitor-qr.vercel.app/profile.html?id=${id}`;
+  window.open(url, "_blank");
+};
+
+  </script>
+
+</body>
+</html>

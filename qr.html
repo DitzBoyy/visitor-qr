@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Pengunjung</title>
+
+<style>
+    body { font-family: Arial; text-align:center; padding:30px; }
+    .card {
+        width:320px; margin:auto; background:#fff; padding:20px;
+        border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    }
+    img { width:250px; margin-top:15px; }
+    button { margin-top:20px; padding:10px 15px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>QR Pengunjung</h2>
+    <img id="qrImage">
+    <br><button onclick="history.back()">Kembali</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+const url = new URLSearchParams(window.location.search);
+const id = url.get("id");
+
+// QR berisi URL lengkap ke profile.html
+const link = `https://visitor-qr.vercel.app/profile.html?id=${id}`;
+
+document.getElementById("qrImage").src =
+  `https://quickchart.io/qr?text=${encodeURIComponent(link)}&size=250`;
+</script>
+
+
+</body>
+</html>
